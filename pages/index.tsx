@@ -74,21 +74,12 @@ const Home = () => {
       setLoading(true);
     }
 
-    if (type === "start") {
+    if (type === "start" || type === "restart") {
       setRace("2");
-      runRace();
-    }
-
-    if (type === "sort") {
-      sortAnts();
-    }
-
-    if (type === "restart") {
-      setSort("NONE");
       dataList &&
         dataList.ants.map((elem: Ant, i: number) => {
           let copyElem = { ...elem };
-          copyElem.likelihood = undefined;
+          copyElem.likelihood = { status: "IN PROGRESS", value: null };
           setDataList((prevState) => {
             if (prevState?.ants) {
               const copyPrev = { ...prevState };
@@ -100,6 +91,14 @@ const Home = () => {
           });
         });
       runRace();
+    }
+
+    if (type === "sort") {
+      sortAnts();
+    }
+
+    if (type === "restart") {
+      setSort("NONE");
     }
   };
 
