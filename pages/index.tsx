@@ -68,7 +68,7 @@ const Home = () => {
     );
   }
 
-  const onSubmit = (type: "fetch" | "start" | "sort") => {
+  const onSubmit = (type: "fetch" | "start" | "sort" | "restart") => {
     if (type === "fetch") {
       fetchList();
       setLoading(true);
@@ -81,6 +81,24 @@ const Home = () => {
 
     if (type === "sort") {
       sortAnts();
+    }
+
+    if (type === "restart") {
+      setSort("NONE");
+      dataList &&
+        dataList.ants.map((elem: Ant, i: number) => {
+          let copyElem = { ...elem };
+          copyElem.likelihood = undefined;
+          setDataList((prevState) => {
+            if (prevState?.ants) {
+              const copyPrev = { ...prevState };
+              copyPrev.ants.splice(i, 1, copyElem);
+              return copyPrev;
+            } else {
+              return prevState;
+            }
+          });
+        });
     }
   };
 
@@ -116,7 +134,7 @@ const Home = () => {
 
   const runRace = () => {
     if (dataList?.ants) {
-      dataList.ants.map((elem, i) => {
+      dataList.ants.map((elem: Ant, i: number) => {
         let copyElem = { ...elem };
         generateAntWinLikelihoodCalculator()((value: number) => {
           copyElem.likelihood = { status: "CALCULATED", value: value };
@@ -162,9 +180,9 @@ const Home = () => {
         <Button
           variant="contained"
           disabled={dataList && race !== "2" ? false : true}
-          onClick={() => onSubmit("start")}
+          onClick={() => onSubmit(race === "3" ? "restart" : "start")}
         >
-          Start Race
+          {race === "3" ? "Start Again" : "Start Race"}
         </Button>
       </div>
 
@@ -203,7 +221,7 @@ const Home = () => {
         }}
       >
         {dataList?.ants &&
-          dataList.ants.map((elem, i) => (
+          dataList.ants.map((elem: Ant, i: number) => (
             <AntGrid ant={elem} key={i} list={dataList.ants} />
           ))}
       </div>
