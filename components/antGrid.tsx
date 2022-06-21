@@ -4,14 +4,14 @@ import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Paper from "@mui/material/Paper";
-import { Ant, AntList } from "../libs/types";
+import { Ant, ListAnts } from "../libs/types";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { makeStyles, useTheme, withStyles } from "@mui/styles";
 
 type AntGridProps = {
   ant: Ant;
-  list: AntList;
+  list: ListAnts;
 };
 
 const useStyles = makeStyles((theme) => ({
