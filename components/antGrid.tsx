@@ -11,7 +11,7 @@ import { makeStyles, useTheme, withStyles } from "@mui/styles";
 
 type AntGridProps = {
   ant: Ant;
-  list: ListAnts;
+  list: Array<Ant>;
 };
 
 const useStyles = makeStyles((theme) => ({
